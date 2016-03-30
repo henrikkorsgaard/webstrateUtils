@@ -5,25 +5,27 @@
  */
 
 ( function () {
-    var timer, root, interval = ( Math.random() * 20000 ) + 10000;
+    var timer, root, 
+        id = generateUUID(); //unique id per client
+        interval = ( Math.random() * 20000 ) + 10000; //update interval
     
-    root = document.getElementById( 'ws-presence' );
+    root = document.getElementById( 'ws-presence' ); 
     if ( !root ) {
         root = document.createElement( 'ws-presence' );
         root.id = 'ws-presence';
         document.body.appendChild( root );
         root.dataset.updated = new Date().getTime();
     }
-
+    
     var self = document.createElement( 'ws-client' );
-    self.dataset.id = generateUUID();
+    self.dataset.id = id;
     self.dataset.parent = ( window.location != window.parent.location ) ? document.referrer : document.location;
     self.dataset.present = true;
     self.dataset.updated = new Date().getTime();
     root.appendChild( self );
-
+    
     var present = root.getElementsByTagName( 'ws-client' );
-
+        
     var updateObserver = new MutationObserver( function ( mutations ) {
         mutations.forEach( function ( mutation ) {
             if ( mutation.attributeName === 'data-updated' ) {
@@ -41,6 +43,13 @@
                         }
                     }
                 }, 5000 );
+            } else if ( mutation.removedNodes.length > 0 ) {
+                //checking if self was removed and then re-add self in case it was removed. 
+                for(var i = 0;i<mutation.removedNodes.length; i++){
+                    if(mutation.removedNodes.dataset.id === id){
+                        root.appendChild( self );
+                    }
+                }
             } else if ( mutation.addedNodes.length > 0 ) {
                 //new clients arrive - wanna do something about it here?
             }
@@ -49,7 +58,6 @@
 
     var presenceObserver = new MutationObserver( function ( mutations ) {
         mutations.forEach( function ( mutation ) {
-            console.log( "Present!" );
             if ( mutation.target.dataset.present === 'false' ) {
                 mutation.target.dataset.present = true;
                 self.dataset.updated = new Date().getTime();
@@ -62,14 +70,15 @@
         childList: true,
         characterData: false
     } );
+    
     presenceObserver.observe( self, {
         attributes: true,
         childList: false,
         characterData: false
     } );
+    
     timer = setInterval( tick, interval );
-
-
+    
     function tick() {
         root.dataset.updated = new Date().getTime();
     }
