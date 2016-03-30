@@ -28,14 +28,15 @@
         mutations.forEach( function ( mutation ) {
             if ( mutation.attributeName === 'data-updated' ) {
                 clearTimeout( timer );
-                console.log( 'pinging clients to update presence' );
                 for ( var i = 0; i < present.length; i++ ) {
                     present[ i ].dataset.present = false;
                 }
+                interval = ( Math.random() * 20000 ) + 10000;
                 timer = setInterval( tick, interval );
                 setTimeout( function () {
                     for ( var i = 0; i < present.length; i++ ) {
                         if ( present[ i ].dataset.present === 'false' ) {
+                            console.log('removing: '+present[ i ].dataset.id);
                             present[ i ].parentNode.removeChild( present[ i ] );
                         }
                     }
