@@ -1,13 +1,12 @@
 /**
  * Presence monitor script for webstrates
- * Just include this <script></script>
+ * Just include this in your webstrate: <script src="https://cdn.rawgit.com/henrikkorsgaard/webstrateUtils/master/ws-presence.js"></script>
+ * This is just a presence manager - you will need to represent/style the list of ws-clients yourself.
  */
 
 ( function () {
     var timer, root, interval = ( Math.random() * 20000 ) + 10000;
-    console.log( "load" );
-
-    console.log( "doc loaded" );
+    
     root = document.getElementById( 'ws-presence' );
     if ( !root ) {
         root = document.createElement( 'ws-presence' );
@@ -22,7 +21,6 @@
     self.dataset.present = true;
     self.dataset.updated = new Date().getTime();
     root.appendChild( self );
-    console.log( self );
 
     var present = root.getElementsByTagName( 'ws-client' );
 
