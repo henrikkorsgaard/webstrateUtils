@@ -5,8 +5,9 @@
 
 (function(){
 	var timer, root, interval = (Math.random()*20000)+10000;
-
+	console.log("load");
   	document.addEventListener('loaded', function(){
+  		console.log("doc loaded");	
 		root = document.getElementById('ws-presence'); 
   		if(!root){
     		root = document.createElement('ws-presence');
@@ -20,7 +21,8 @@
   		self.dataset.parent = (window.location != window.parent.location) ? document.referrer : document.location;
       	self.dataset.present = true;
       	self.dataset.updated = new Date().getTime();
-		root.appendChild(self);      
+	root.appendChild(self);      
+      	console.log(self);
       
       	var present = root.getElementsByTagName('ws-client');
       
