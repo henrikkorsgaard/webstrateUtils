@@ -46,7 +46,7 @@
             } else if ( mutation.removedNodes.length > 0 ) {
                 //checking if self was removed and then re-add self in case it was removed. 
                 for(var i = 0;i<mutation.removedNodes.length; i++){
-                    if(mutation.removedNodes.dataset.id === id){
+                    if(mutation && mutation.removedNodes.dataset.id === id){
                         root.appendChild( self );
                     }
                 }
@@ -58,7 +58,7 @@
 
     var presenceObserver = new MutationObserver( function ( mutations ) {
         mutations.forEach( function ( mutation ) {
-            if ( mutation.target.dataset.present === 'false' ) {
+            if (mutation.target.dataset.present === 'false' ) {
                 mutation.target.dataset.present = true;
                 self.dataset.updated = new Date().getTime();
             }
