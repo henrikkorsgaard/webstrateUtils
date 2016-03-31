@@ -36,7 +36,7 @@
                 interval = ( Math.random() * 20000 ) + 10000;
                 timer = setInterval( tick, interval );
                 setTimeout( function () {
-                    for ( var i = 0; i < present.length; i++ ) {
+                    for ( var i = present.length - 1; i >= 0; i-- ) {
                         if ( present[ i ].dataset.present === 'false' ) {
                             console.log('removing: '+present[ i ].dataset.id);
                             present[ i ].parentNode.removeChild( present[ i ] );
