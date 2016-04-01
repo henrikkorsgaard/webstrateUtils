@@ -46,7 +46,7 @@
             } else if ( mutation.removedNodes.length > 0 ) {
                 //checking if self was removed and then re-add self in case it was removed. 
                 for(var i = 0;i<mutation.removedNodes.length; i++){
-                    if(mutation && mutation.removedNodes.dataset.id === id){
+                    if(mutation.removedNodes[i].dataset.id === id){
                         root.appendChild( self );
                     }
                 }
