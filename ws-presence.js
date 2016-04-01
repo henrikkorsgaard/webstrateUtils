@@ -7,7 +7,7 @@
 ( function () {
     var timer, root, 
         id = generateUUID(); //unique id per client
-        interval = ( Math.random() * 20000 ) + 10000; //update interval
+        interval = ( Math.random() * 10000 ) + 5000; //update interval
     
     root = document.getElementById( 'ws-presence' ); 
     if ( !root ) {
@@ -33,7 +33,6 @@
                 for ( var i = 0; i < present.length; i++ ) {
                     present[ i ].dataset.present = false;
                 }
-                interval = ( Math.random() * 20000 ) + 10000;
                 timer = setInterval( tick, interval );
                 setTimeout( function () {
                     for ( var i = present.length - 1; i >= 0; i-- ) {
